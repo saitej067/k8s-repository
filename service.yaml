@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  namespace: my-namespace
+spec:
+  selector:
+    app: my-app
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP     # default service is clusteIP if we don't define type then kubernet thinks as clusterIp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nodeportservice
+  namespace: my-namespace
+spec:
+  selector:
+    app: my-app
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 32456
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: my-loadbalancer
+  namespace: my-namespace
+spec:
+  selector:
+    app: my-app
+  ports:
+    - name: http
+      protocol: tcp     # we use tcp,udp and sctp protocol commonly used tcp protocol 
+      port: 80
+      targerPort: 8080
+    - name: https
+      protocol: tcp
+      port: 443
+      targetPort: 8443 
+       
+  
